@@ -41,8 +41,18 @@ def concatenate_frequencies_to_wav(frequencies, duration_s=1, output_file="outpu
     
     concatenated_audio.export(output_file, format="wav")
 
+def concatenate_frequencies_to_csv(frequencies, duration_s=1, output_file="output.csv", index=0):
+    csvFile = "index,time,frequency\n"
+    time = 0
+    for freq in frequencies:
+        csvFile += f"{index},{time},{freq}\n"
+        time += duration_s
+    f = open(output_file, "w")
+    f.write(csvFile)
+    f.close()
+
 ### MAIN ###
-def Chess2Audio(origin, length, destination, useDefaultNamingScheme=False, directory=""):
+def Chess2Audio(origin, length, destination, useDefaultNamingScheme=False, idx=0, directory=""):
     # Declarations
     pieces = {'K', 'Q', 'R', 'B', 'N'}
 
@@ -134,6 +144,7 @@ def Chess2Audio(origin, length, destination, useDefaultNamingScheme=False, direc
             destination = directory + "\\" + name + "_" + date + ".wav"
 
     concatenate_frequencies_to_wav(frequencies, duration_s=length, output_file=destination)
+    concatenate_frequencies_to_csv(frequencies, length, destination[:-4] + ".csv", idx)
     f.close()
 
 def parseFolder(originalDirectory, destinationDirectory, delay):
@@ -146,7 +157,7 @@ def parseFolder(originalDirectory, destinationDirectory, delay):
         if file.endswith(".pgn"):
             originalFile = originalDirectory + "\\" + file
             destinationFile = destinationDirectory
-            Chess2Audio(originalFile, delay, destinationFile)
+            Chess2Audio(originalFile, delay, destinationFile, False, i)
         bar.next()
     bar.finish()
     print("Done.")
@@ -154,6 +165,8 @@ def parseFolder(originalDirectory, destinationDirectory, delay):
 def parseHugeFile(file, destinationDirectory, pauseLength):
     fi = open(file, 'r')
     f = fi.readlines()
+    f.append("\n")
+    f.append("\n")
     p1 = ""
     p2 = "?"
     lastGood = 0
@@ -173,7 +186,7 @@ def parseHugeFile(file, destinationDirectory, pauseLength):
             lastGood = i
             game += 1
             
-            Chess2Audio(directory, pauseLength, directory[:-3] + ".wav", True, destinationDirectory)
+            Chess2Audio(directory, pauseLength, directory[:-3] + ".wav", True, int(game), destinationDirectory)
             remove(directory)
         elif p1 == p2:
             lastGood += 1
@@ -203,7 +216,7 @@ if __name__ == "__main__":
                 start = input("Where to read file? ")
                 duration = float(input("File Duration? "))
                 end = input("Name the file: ")
-                Chess2Audio(start, duration, end, True)
+                Chess2Audio(start, duration, end, False)
                 after = input("Continue? (Yes/No) ")
                 match after.lower():
                     case "no": break
