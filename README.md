@@ -55,3 +55,6 @@ parseHugeFile(file, destinationDirectory, pauseLength) # similar to parseFolder,
 ## Moving forward
 Perhaps a visualization of the audio files for data analysis, clock moves corresponding to durations in length.
 Consistency within functions.
+
+### Other notes
+Still learning ins and outs of github, so don't expect clean code or documentation much. Don't even expect this to be great. It's just good enough.
