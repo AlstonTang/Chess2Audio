@@ -57,7 +57,7 @@ parseHugeFile(file, destinationDirectory, pauseLength) # similar to parseFolder,
 ```
 
 ### Methods you can remove without breaking:
-```roundFrequency```
+```roundFrequency``` (Do update getFrequency) This allows the removal of librosa.
 
 ## Moving forward
 Perhaps a visualization of the audio files for data analysis, clock moves corresponding to durations in length.
