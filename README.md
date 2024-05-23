@@ -9,6 +9,10 @@ You will need pgn files to do this (duh), you can find this on lichess.org or on
 So how to use it?
 Well at the moment (Commit 2), you can either run it as standalone code or import it.
 
+### Dependencies:
+librosa, progress, pydub
+Use pip install to get these packages (for convenience, I have also provided a requirements text file that you can pipe into pip to install these packages).
+
 ### Standalone code:
 Follow the instructions. Note that the file name **will** need a directory built in to it unless you want it within the same directory as the python file.
 Be sure the file and folder exists! (If you run the exact same inputs again, the files will get overwritten!)
@@ -51,6 +55,9 @@ parseFolder(originalDirectory, destinationDirectory, delay) # originalDirectory 
 
 parseHugeFile(file, destinationDirectory, pauseLength) # similar to parseFolder, but uses file instead of originalDirectory.
 ```
+
+### Methods you can remove without breaking:
+```roundFrequency```
 
 ## Moving forward
 Perhaps a visualization of the audio files for data analysis, clock moves corresponding to durations in length.
